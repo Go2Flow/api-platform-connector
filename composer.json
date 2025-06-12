@@ -1,0 +1,37 @@
+{
+    "name": "go2flow/api-platform-connector",
+    "description": "go2flow tool for connecting to our api-platform package",
+    "type": "project",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "api platform connector"
+    ],
+
+    "authors": [
+        {
+            "name" : "Jelte ten Holt",
+            "email" : "jelte.tenholt@go2flow.de",
+            "homepage": "https://www.go2flow.de/",
+            "role" : "developer"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Go2Flow\\ApiPlatform\\ApiPlatformConnectorServiceProvider"
+            ]
+        }
+    },
+
+    "autoload" : {
+        "psr-4" : {
+            "Go2Flow\\ApiPlatformConnector\\": "src/"
+        }
+    },
+
+    "minimum-stability": "dev",
+    "require": {
+        "guzzlehttp/guzzle": "^7.0.1"
+    }
+}
