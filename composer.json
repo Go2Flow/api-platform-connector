@@ -19,7 +19,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Go2Flow\\ApiPlatform\\ApiPlatformConnectorServiceProvider"
+                "Go2Flow\\ApiPlatformConnector\\ApiPlatformConnectorServiceProvider"
             ]
         }
     },
