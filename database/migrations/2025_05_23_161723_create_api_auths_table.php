@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('url');
             $table->string('password');
             $table->string('user_name');
-            $table->string('key')->nullable();
+            $table->string('token')->nullable();
             $table->string('identifier');
             $table->timestamps();
         });
