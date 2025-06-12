@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Crypt;
 
 class StandardAuth implements AuthInterface
 {
+    private ?object $response = null;
+
     public function __construct(private ApiAuth $auth) {}
 
     public function authenticate(Guzzle $client) : ?string {
@@ -17,14 +19,14 @@ class StandardAuth implements AuthInterface
 
         $password = Crypt::decryptString($this->auth->password);
 
-        $this->response = $this->guzzleClient->get(
+        $this->response = $client->get(
             'api-platform/auth?email=' . $this->auth->user_name . '&password=' . $password,
             [
                 'headers' => ['Content-Type' => 'application/json'],
             ]
         );
 
-        if ($this->response->getStatusCode() !== 200) return false;
+        if ($this->response->getStatusCode() !== 200) return null;
 
         $token = json_decode($this->response->getBody())->token;
 
