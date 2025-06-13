@@ -17,5 +17,12 @@ class ApiPlatformConnectorServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+
+        $loader->alias(
+            'Api',
+            'Go2Flow\ApiPlatformConnector\Api\Api'
+        );
     }
 }
