@@ -12,8 +12,6 @@ use Illuminate\Support\Str;
 class Client
 {
     private array $payload = [];
-    private ?array $header = null;
-    private ?object $response;
     private Guzzle $guzzleClient;
 
     private ?array $parameters = [];
@@ -60,7 +58,6 @@ class Client
         public function clearPayload() : self
     {
         $this->payload = [];
-        $this->header = null;
         $this->parameters = [];
 
         return $this;
