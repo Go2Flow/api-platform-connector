@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('api_auths', function (Blueprint $table) {
-            $table->id();
-            $table->string('url');
-            $table->string('password');
-            $table->string('user_name');
-            $table->string('token')->nullable();
-            $table->string('identifier');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('api_auths')) {
+            Schema::create('api_auths', function (Blueprint $table) {
+                $table->id();
+                $table->string('url');
+                $table->text('password');
+                $table->string('user_name');
+                $table->string('token')->nullable();
+                $table->string('identifier');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

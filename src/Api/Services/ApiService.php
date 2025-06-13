@@ -110,7 +110,7 @@ class ApiService
         return $this->postRequest($payload);
     }
 
-    public function body(): object
+    public function body(): ?object
     {
         try {
             return $this->response->data();

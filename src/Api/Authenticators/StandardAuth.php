@@ -17,10 +17,8 @@ class StandardAuth implements AuthInterface
 
         if ($this->auth->token) return $this->auth->token;
 
-        $password = Crypt::decryptString($this->auth->password);
-
         $this->response = $client->get(
-            'api-platform/auth?email=' . $this->auth->user_name . '&password=' . $password,
+            'api-platform/auth?email=' . $this->auth->user_name . '&password=' . $this->auth->password,
             [
                 'headers' => ['Content-Type' => 'application/json'],
             ]
