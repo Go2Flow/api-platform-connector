@@ -32,6 +32,7 @@
 
     "minimum-stability": "dev",
     "require": {
-        "guzzlehttp/guzzle": "^7.0.1"
+        "guzzlehttp/guzzle": "^7.0.1",
+        "laravel/larvel": "^11.0.0"
     }
 }
