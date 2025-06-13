@@ -6,7 +6,6 @@ use Go2Flow\ApiPlatformConnector\Api\Authenticators\Interfaces\AuthInterface;
 use GuzzleHttp\Client as Guzzle;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
-use Go2Flow\ApiPlatformConnector\Api\Services\Response;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -28,7 +27,6 @@ class Client
         $this->auth->authenticate($this->guzzleClient);
 
         return $this;
-
     }
 
     public function addParameter(string $parameter) : void
@@ -93,6 +91,17 @@ class Client
         return $parameters->rtrim('&')->toString();
     }
 
+    public function addToPayload(string|array $array, string $field = 'body') : self
+    {
+        if (isset($this->payload[$field])) {
+            $array += $this->payload[$field];
+        }
+
+        $this->payload[$field] = $array;
+
+        return $this;
+    }
+
     private function setPayload() : array
     {
 
@@ -103,16 +112,5 @@ class Client
         }
 
         return $payload;
-    }
-
-    public function addToPayload(string|array $array, string $field = 'body') : self
-    {
-        if (isset($this->payload[$field])) {
-            $array += $this->payload[$field];
-        }
-
-        $this->payload[$field] = $array;
-
-        return $this;
     }
 }

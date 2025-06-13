@@ -4,7 +4,6 @@ namespace Go2Flow\ApiPlatformConnector\Api\Services;
 
 use Go2Flow\ApiPlatformConnector\Api\Authenticators\Interfaces\AuthInterface;
 use Illuminate\Support\Str;
-use Go2Flow\ApiPlatformConnector\Api\Services\Response;
 
 class ApiService
 {
@@ -55,7 +54,6 @@ class ApiService
 
     public function filter(array $filter) : self
     {
-
         $key = array_key_first($filter);
         $value = $filter[$key];
 
@@ -111,14 +109,19 @@ class ApiService
         return $this->postRequest($payload);
     }
 
-    public function body(array $remove = []): object|null
+    public function body(array $remove = []): ?object
     {
         return $this->response?->data();
     }
 
-    public function statusCode(): ?int
+    public function status(): ?int
     {
         return $this->response?->status();
+    }
+
+    public function error(): ?string
+    {
+        return $this->response?->error();
     }
 
     protected function setPath(string $path): self

@@ -5,9 +5,9 @@ namespace Go2Flow\ApiPlatformConnector\Api\Services;
 class Response
 {
     public function __construct(
-        private int $status,
-        private ?object $data = null,
-        private ?string $error = null,
+        private readonly int $status,
+        private readonly ?object $data = null,
+        private readonly ?string $error = null,
     ) {}
 
     public function status(): int
