@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Api\Services;
+namespace Go2Flow\ApiPlatformConnector\Api\Services;
 
-use App\Models\ApiAuth;
 use Go2Flow\ApiPlatformConnector\Api\Authenticators\Interfaces\AuthInterface;
 use Illuminate\Support\Str;
-
 
 class ApiService
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Api;
+namespace Go2Flow\ApiPlatformConnector\Api;
 
-use App\Api\Services\ApiService;
 use Go2Flow\ApiPlatformConnector\Api\Authenticators\StandardAuth;
+use Go2Flow\ApiPlatformConnector\Api\Services\ApiService;
 use Go2Flow\ApiPlatformConnector\Models\ApiAuth;
 use Go2Flow\ApiPlatformConnector\Api\Authenticators\Interfaces\AuthInterface;
 
