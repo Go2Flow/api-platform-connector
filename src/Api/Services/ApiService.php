@@ -4,6 +4,7 @@ namespace Go2Flow\ApiPlatformConnector\Api\Services;
 
 use Go2Flow\ApiPlatformConnector\Api\Authenticators\Interfaces\AuthInterface;
 use Illuminate\Support\Str;
+use RuntimeException;
 
 class ApiService
 {
@@ -109,19 +110,34 @@ class ApiService
         return $this->postRequest($payload);
     }
 
-    public function body(array $remove = []): ?object
+    public function body(array $remove = []): object
     {
-        return $this->response?->data();
+        try {
+            return $this->response->data();
+        }
+        catch (\Exception $e) {
+            throw new RuntimeException ('There is no response object. Did you send a request?');
+        }
     }
 
-    public function status(): ?int
+    public function status(): int
     {
-        return $this->response?->status();
+        try {
+            return $this->response->status();
+        }
+        catch (\Exception $e) {
+            throw new RuntimeException ('There is no response object. Did you send a request?');
+        }
     }
 
     public function error(): ?string
     {
-        return $this->response?->error();
+        try {
+            return $this->response->error();
+        }
+        catch (\Exception $e) {
+            throw new RuntimeException ('There is no response object. Did you send a request?');
+        }
     }
 
     protected function setPath(string $path): self
