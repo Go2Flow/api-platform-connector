@@ -14,7 +14,7 @@ class Client
     private array $payload = [];
     private Guzzle $guzzleClient;
 
-    private ?array $parameters = [];
+    private array $parameters = [];
 
 
     public function __construct(private AuthInterface $auth) {

@@ -42,14 +42,17 @@ class StandardAuth implements AuthInterface
         return $this->auth->url;
     }
 
-    public function payload() : array
+    public function payload(): array
     {
-        return [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->auth->token,
-            ]
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
         ];
+
+        if ($this->auth->token) {
+            $headers['Authorization'] = 'Bearer ' . $this->auth->token;
+        }
+
+        return ['headers' => $headers];
     }
 }
