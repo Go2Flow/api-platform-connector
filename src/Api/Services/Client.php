@@ -4,7 +4,9 @@ namespace Go2Flow\ApiPlatformConnector\Api\Services;
 
 use Go2Flow\ApiPlatformConnector\Api\Authenticators\Interfaces\AuthInterface;
 use GuzzleHttp\Client as Guzzle;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
+use Go2Flow\ApiPlatformConnector\Api\Services\Response;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -34,9 +36,8 @@ class Client
         $this->parameters[] = $parameter;
     }
 
-    public function sendRequest($path, $method = 'GET', $content = null) : ?object
+    public function sendRequest($path, $method = 'GET', $content = null) : Response
     {
-
         try {
             $response = $this->guzzleClient->request(
                 $method,
@@ -44,14 +45,30 @@ class Client
                 $content ?: $this->setPayload()
             );
 
-        } catch (ClientException $e) {
-           Log::info($e->getMessage());
+            $body = json_decode($response->getBody()->getContents());
+
+            return new Response(
+                $response->getStatusCode(),
+                $body
+            );
+
+        } catch (GuzzleException $e) {
+            $status = $e instanceof RequestException && $e->getResponse()
+                ? $e->getResponse()->getStatusCode()
+                : 0;
+            $errorBody = $e instanceof RequestException && $e->getResponse()
+                ? $e->getResponse()->getBody()->getContents()
+                : null;
+            Log::error($e->getMessage(), ['status' => $status, 'body' => $errorBody]);
+
+            return new Response(
+                $status,
+                null,
+                $e->getMessage()
+            );
+        } finally {
+            $this->clearPayload();
         }
-
-        $this->clearPayload();
-
-
-        return $response ?? null;
     }
 
         public function clearPayload() : self

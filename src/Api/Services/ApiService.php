@@ -4,11 +4,12 @@ namespace Go2Flow\ApiPlatformConnector\Api\Services;
 
 use Go2Flow\ApiPlatformConnector\Api\Authenticators\Interfaces\AuthInterface;
 use Illuminate\Support\Str;
+use Go2Flow\ApiPlatformConnector\Api\Services\Response;
 
 class ApiService
 {
 
-    protected ?object $response;
+    protected ?Response $response = null;
     protected ?string $path;
     protected Client $client;
 
@@ -110,9 +111,14 @@ class ApiService
         return $this->postRequest($payload);
     }
 
-    public function body(array $remove = []): null|object|array
+    public function body(array $remove = []): object|null
     {
-        return json_decode($this->response->getBody()->getContents());
+        return $this->response?->data();
+    }
+
+    public function statusCode(): ?int
+    {
+        return $this->response?->status();
     }
 
     protected function setPath(string $path): self
