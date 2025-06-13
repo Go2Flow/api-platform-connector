@@ -42,8 +42,14 @@ class StandardAuth implements AuthInterface
         return $this->auth->url;
     }
 
-    public function token() : string
+    public function payload() : array
     {
-        return $this->auth->token;
+        return [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->auth->token,
+            ]
+        ];
     }
 }

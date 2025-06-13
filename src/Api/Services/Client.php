@@ -5,6 +5,8 @@ namespace App\Api\Services;
 use App\Models\ApiAuth;
 use Go2Flow\ApiPlatformConnector\Api\Authenticators\Interfaces\AuthInterface;
 use GuzzleHttp\Client as Guzzle;
+use GuzzleHttp\Exception\ClientException;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class Client
@@ -26,24 +28,6 @@ class Client
     {
         $this->auth->authenticate($this->guzzleClient);
 
-//        $password = Crypt::decryptString($this->auth->password);
-//
-//        $this->response = $this->guzzleClient
-//            ->get(
-//                'api-platform/auth?email=' . $this->auth->user_name . '&password=' . $password,
-//                [
-//                    'headers' => ['Content-Type' => 'application/json'],
-//                ]
-//            );
-//
-//        if ($this->response->getStatusCode() === 200) {
-//
-//
-//            $this->auth->update([
-//                'key' => json_decode($this->response->getBody())->token
-//            ]);
-//        }
-
         return $this;
 
     }
@@ -56,16 +40,16 @@ class Client
     public function sendRequest($path, $method = 'GET', $content = null) : ?object
     {
 
-//        try {
+        try {
             $response = $this->guzzleClient->request(
                 $method,
                 'api-platform/' . $path . $this->addParameters(),
                 $content ?: $this->setPayload()
             );
 
-//        } catch (ClientException $e) {
-//           Log::info($e->getMessage());
-//        }
+        } catch (ClientException $e) {
+           Log::info($e->getMessage());
+        }
 
         $this->clearPayload();
 
@@ -99,13 +83,7 @@ class Client
     private function setPayload() : array
     {
 
-        $payload = $this->header ?: [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->auth->token(),
-            ]
-        ];
+        $payload = $this->auth->payload();
 
         foreach ($this->payload as $key => $content) {
             $payload[$key] = json_encode($content);

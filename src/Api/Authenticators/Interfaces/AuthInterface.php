@@ -10,5 +10,6 @@ interface AuthInterface
 
     public function url() : string;
 
-    public function token() : string;
+    public function payload() : array;
+
 }
