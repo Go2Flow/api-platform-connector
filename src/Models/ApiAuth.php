@@ -14,7 +14,7 @@ class ApiAuth extends Model
     {
         return Attribute::make(
             get: fn (string $value) => Crypt::decryptstring($value),
-            set: fn (string $value) => Crypt::encrypt($value)
+            set: fn (string $value) => Crypt::encryptString($value)
         );
     }
 }
