@@ -63,6 +63,21 @@ class ApiService
         return $this;
     }
 
+    public function limit(int $limit): self
+    {
+
+        $this->client->addParameter('per_page=' . $limit);
+
+        return $this;
+    }
+
+    public function page(int $page): self
+    {
+        $this->client->addParameter('page=' . $page);
+
+        return $this;
+    }
+
     public function relations(array $relations) : self
     {
         $include = Str::of('include=');
